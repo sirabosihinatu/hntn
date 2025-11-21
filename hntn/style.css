@@ -1,0 +1,299 @@
+/* 基本設定とリセット */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    /* スムーズスクロール (任意) */
+    scroll-behavior: smooth; 
+}
+h2 {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2rem;
+    color: #1a1a1a;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 1. ヒーローセクション */
+.hero-section {
+    /* ナビゲーションやロゴを含めた全セクションのラッパー */
+    position: relative;
+}
+
+.hero-image-container {
+    /* 画面の高さいっぱいに設定 */
+    height: 100vh; 
+    /* 子要素の絶対配置の基準点 */
+    position: relative; 
+    
+    /* 🌟背景画像の設定 (画面いっぱいの画像) */
+    background-image: url('your-background-image.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    z-index: 1; /* ナビゲーションの下に配置 */
+}
+
+/*
+ * 🌟 デフォルトのスタイル (主にモバイル版に適用)
+ *
+ * 注: この例では、元のコードの値をモバイル版として使用します。
+ * もしモバイル版でもっと小さくしたい場合は、このセクションで値を調整してください。
+ */
+.logo-image {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    width: 250px; /* モバイル向けにサイズを小さく設定し直す (例) */
+    height: auto;
+    z-index: 3;
+}
+
+/*
+ * 🖥️ PC版のスタイル (画面幅が 768px 以上のデバイスに適用)
+ *
+ * - 768px はタブレット〜PCの境界としてよく使われる値です。
+ * - ここで、モバイル版から変更したいプロパティだけを上書きします。
+ */
+@media (min-width: 768px) {
+    .logo-image {
+        top: 50px;    /* 上からの位置（変更なし、またはPC向けに調整）*/
+        left: 20px;   /* 左からの位置（変更なし、またはPC向けに調整）*/
+        width: 450px; /* PC向けに元の大きいサイズを適用 */
+        /* height: auto; や z-index: 3; は変更ないので不要 */
+    }
+}
+
+
+
+.main-nav ul {
+    display: flex;
+    justify-content: flex-end; /* 右寄せ */
+    align-items: center;
+}
+
+.main-nav li {
+    margin-left: 30px;
+}
+
+.main-nav a {
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover {
+    color: #ff6347; /* ホバー時の色 */
+}
+
+.nav-button {
+    background-color: #ff6347;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-left: 40px;
+}
+
+
+/* 2. メインコンテンツセクション */
+.content-section {
+    padding: 60px 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+.card-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.staff-section {
+    background-color: #fff;
+    padding-bottom: 100px; /* 見栄えのための余白 */
+}
+
+.staff-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.staff-member {
+    text-align: center;
+    width: 120px;
+}
+
+.staff-member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* 画像を丸くする */
+    object-fit: cover;
+    border: 3px solid #ff6347;
+}
+
+/* 3. フッターセクション */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #222;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.footer-links a {
+    color: #ccc;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* -----------------------------
+/* 基本リセット */
+.calendar-wrapper * {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.calendar-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.note {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* 開催カレンダーのセクション */
+#calendar-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.calendar-section {
+    width: 100%; /* 全幅を使う */
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.event-year {
+    /* 年の表示 */
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.year-events-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.event-item {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.4;
+    min-width: 120px; /* カードの最小幅 */
+    flex-grow: 1; /* スペースに応じて拡大 */
+    flex-basis: auto;
+}
+
+/* 直近の開催予定 */
+.highlight-event {
+    background-color: #e0e0e0; /* 直近の予定をハイライト */
+    font-size: 20px;
+    font-weight: bold;
+    min-height: 100px; /* 目立たせるために高さを出す */
+    flex-basis: 300px; /* 直近の予定は大きく表示 */
+    margin-top: 10px;
+}
+
+.highlight-event .date {
+    font-size: 30px;
+}
+
+
+
+.container {
+    /* 子要素（.item）を横並びにする */
+    display: flex;
+    justify-content: center; /* 中央揃え */
+    gap: 30px; /* アイテム間の余白 */
+}
+
+/* 各画像とテキストのセット（item）の設定 */
+.item {
+    /* item内の要素（画像とテキスト）を縦方向に並べる */
+    display: flex;
+    flex-direction: column;
+    /* item内のテキストなどを中央揃えにする */
+    align-items: center; 
+}
+
+.circle-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    /* 画像と下のテキストの間に少し余白を開ける */
+    margin-bottom: 10px; 
+}
+
+.image-text {
+    /* テキストのスタイル（任意） */
+    font-size: 16px;
+    color: #333;
+    margin: 0; /* デフォルトのマージンをリセット */
+}
+
