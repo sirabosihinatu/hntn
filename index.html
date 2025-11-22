@@ -1,56 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高校生集会</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>高校生集会</title>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
 
- <style>
-        /* 「.center-text」というクラス名を持つ要素にスタイルを適用 */
-        .center-text {
-            text-align: center; /* これがコードです */
-            /* 他のスタイルもここに追加できます */
-        }
+    <body>
+        <header class="hero-section">
+            <div class="hero-image-container">
+                <img src="./assets/hssm-logo.png" alt="サイトロゴ" class="logo-image">
+            </div>
+        </header>
 
-        /* もし見出し（h2）全てを中央揃えしたい場合 */
-        h2 {
-            text-align: center; 
-        }
-    </style>
-</head>
-<body>
+        <section id="about" class="content-section about-section">
+            <h2>高校生集会とは</h2>
+            <div class="center-text">
+                <p>高校生集会はVRChatで開催されている高校生のための交流イベントです。</p>
+                <p>高校生限定のイベントで同年代の人と雑談したり、フレンドを増やしたりしてみませんか？</p>
+                <p>「ちょっと顔出してみようかな」から「長居しちゃった」まで大歓迎！</p>
+                <p>ぜひ集会に来てみてね！</p>
+                <p class="note">※当イベントはロールプレイイベントではありません</p>
+            </div>
+        </section>
 
-
-
-
-</body>
-</html>
-
-<body>
-    
-    <header class="hero-section">
-        <div class="hero-image-container">
-            <img src="your-logo.png" alt="サイトロゴ" class="logo-image">
-        </div>
-        
-        
-        
-   
-    </header>
-
- <section id="staff" class="content-section staff-section">
-            
- <h2>高校生集会とは</h2>
-  <p class="center-text">高校生集会はVRChatで開催されている高校生のための交流イベントです。</p>
-  <p class="center-text">高校生限定のイベントで同年代の人と雑談したり、フレンドを増やしたりしてみませんか？</p>
-  <p class="center-text">「ちょっと顔出してみようかな」から「長居しちゃった」まで大歓迎！</p>
-  <p class="center-text">ぜひ集会に来てみてね！</p>
- <p style="color: rgba(0, 0, 0, 0.5); text-align: center;">
-    ※当イベントはロールプレイイベントではありません
-</p>
-    <main>                                              
         <section id="info" class="content-section info-section">
             <h2>開催情報</h2>
             <div class="card-grid">
@@ -67,286 +41,58 @@
             </div>
         </section>
 
-       
-
-   
-
-</body>
-
-<br><br>
-<br><br>
-
-
-<script>
-
-/**
- * 毎月第N曜日 (例: 第2金曜) の日付を計算する関数
- * @param {number} year - 年 (例: 2025)
- * @param {number} month - 月 (0-indexed: 0=1月, 11=12月)
- * @param {number} dayOfWeek - 曜日 (0=日曜, 5=金曜, 6=土曜)
- * @param {number} weekIndex - 第N週目 (例: 2で第2週目)
- * @param {string} time - 時刻 (例: "22:00")
- * @returns {object|null} - 開催日オブジェクト (date, dayOfWeekText, time) または null
- */
-function getSpecificDayOfMonth(year, month, dayOfWeek, weekIndex, time) {
-    let date = new Date(year, month, 1);
-    let count = 0;
-    let day = -1;
-
-    // 1日から月末までループ
-    while (date.getMonth() === month) {
-        if (date.getDay() === dayOfWeek) {
-            count++;
-            if (count === weekIndex) {
-                day = date.getDate();
-                break;
-            }
-        }
-        date.setDate(date.getDate() + 1);
-    }
-
-    if (day !== -1) {
-        // 月初に戻って正しい日付を設定
-        const eventDate = new Date(year, month, day);
-        const dayOfWeekTexts = ['日', '月', '火', '水', '木', '金', '土'];
-        const dayOfWeekText = dayOfWeekTexts[dayOfWeek];
-
-        return {
-            date: eventDate,
-            dayOfWeekText: dayOfWeekText,
-            time: time,
-            dateString: `${eventDate.getFullYear()}/${String(eventDate.getMonth() + 1).padStart(2, '0')}/${String(day).padStart(2, '0')}`,
-            displayString: `${String(eventDate.getMonth() + 1).padStart(2, '0')}/${String(day).padStart(2, '0')}${dayOfWeekText} ${time}～`
-        };
-    }
-    return null;
-}
-
-/**
- * 開催カレンダーデータを生成し、現在時刻より後の予定のみをフィルタリングする関数
- * @param {number} yearsToLookAhead - 何年先まで予定を生成するか
- * @returns {Array<object>} - フィルタリングされた開催予定のリスト
- */
-function generateCalendarData(yearsToLookAhead = 1) {
-    const today = new Date();
-    // 開催予定時刻まで含めて比較するため、現在時刻を基準点とする
-    // 例: 2025/11/21 21:00 の予定は、2025/11/21 21:00:01 以降で過ぎたことになる
-    // ここではシンプルに、予定時刻を考慮したDateオブジェクトを作成して比較します。
-
-    const eventList = [];
-    const currentYear = today.getFullYear();
-    const endYear = currentYear + yearsToLookAhead;
-
-    for (let year = currentYear; year <= endYear; year++) {
-        for (let month = 0; month < 12; month++) {
-            // ------------------------------------
-            // 1. 毎月第2金曜 22:00～ (曜日: 5=金曜, 週目: 2)
-            // ------------------------------------
-            const secondFriday = getSpecificDayOfMonth(year, month, 5, 2, "22:00");
-            if (secondFriday) {
-                // 予定日付に時刻を設定して比較用Dateオブジェクトを作成
-                const eventDateWithTime = new Date(secondFriday.date);
-                eventDateWithTime.setHours(22, 0, 0, 0); // 22:00
-
-                // 過去の予定は除外
-                if (eventDateWithTime > today) {
-                    eventList.push(secondFriday);
-                }
-            }
-
-            // ------------------------------------
-            // 2. 毎月第4土曜 21:00～ (曜日: 6=土曜, 週目: 4)
-            // ------------------------------------
-            const fourthSaturday = getSpecificDayOfMonth(year, month, 6, 4, "21:00");
-            if (fourthSaturday) {
-                // 予定日付に時刻を設定して比較用Dateオブジェクトを作成
-                const eventDateWithTime = new Date(fourthSaturday.date);
-                eventDateWithTime.setHours(21, 0, 0, 0); // 21:00
-
-                // 過去の予定は除外
-                if (eventDateWithTime > today) {
-                    eventList.push(fourthSaturday);
-                }
-            }
-        }
-    }
-
-    // 日付順にソート
-    eventList.sort((a, b) => a.date - b.date);
-
-    return eventList;
-}
-
-// ------------------------------------------------
-// 実行部分：DOM操作
-// ------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 予定データを取得 (ここでは1年先まで取得)
-    const futureEvents = generateCalendarData(1);
-
-    // イベントを表示するコンテナのID (HTML側で id="calendar-container" などを作成してください)
-    const container = document.getElementById('calendar-container');
-
-    if (!container) {
-        console.error('ID "calendar-container" が見つかりません。HTML側に設置してください。');
-        return;
-    }
-
-    // まずコンテナの中身を空にする
-    container.innerHTML = '';
-
-    if (futureEvents.length === 0) {
-        container.innerHTML = '<p>現在のところ、予定されている開催日はありません。</p>';
-        return;
-    }
-
-    // 最初の予定を「直近の開催予定」としてハイライト
-    const nextEvent = futureEvents[0];
-    // 残りの予定
-    const otherEvents = futureEvents.slice(1);
-
-    // 1. 直近の開催予定
-    const nextEventHTML = `
-        <div class="calendar-section">
-            <h3 class="section-title">直近の開催予定</h3>
-            <div class="event-item highlight-event">
-                <span class="date">${String(nextEvent.date.getMonth() + 1).padStart(2, '0')}/${String(nextEvent.date.getDate()).padStart(2, '0')} ${nextEvent.dayOfWeekText}</span>
-                <span class="time">${nextEvent.time}～</span>
+        <section id="calendar" class="content-section calendar-section">
+            <h1 class="main-title">開催カレンダー</h1>
+            <p class="note">開催日は変わることがあります。</p>
+            <div id="calendar-container" class="calendar-container">
             </div>
-        </div>
-    `;
+        </section>
 
-    // 2. その他の開催予定（年ごとに分類）
-    let otherEventsHTML = `<div class="calendar-section other-events-section">`;
-    let currentYear = null;
-
-    otherEvents.forEach(event => {
-        const year = event.date.getFullYear();
-
-        // 年が変わったら新しい年セクションを作成
-        if (year !== currentYear) {
-            if (currentYear !== null) {
-                // 前の年のセクションを閉じる
-                otherEventsHTML += '</div>';
-            }
-            currentYear = year;
-            otherEventsHTML += `<h3 class="section-title event-year">${year}年</h3><div class="year-events-list">`;
-        }
-
-        otherEventsHTML += `
-            <div class="event-item">
-                <span class="date">${String(event.date.getMonth() + 1).padStart(2, '0')}/${String(event.date.getDate()).padStart(2, '0')}${event.dayOfWeekText}</span>
-                <span class="time">${event.time}～</span>
+        <section id="staff" class="content-section staff-section">
+            <h2>スタッフ</h2>
+            <div class="staff-grid">
+                <div class="staff-row">
+                    <div class="item">
+                        <img src="./assets/icon/fkaoi.png" alt="fkaoi" class="circle-img">
+                        <p class="image-text">fkaoi_</p>
+                    </div>
+                    <div class="item">
+                        <img src="./assets/icon/fail.png" alt="fail" class="circle-img">
+                        <p class="image-text">ふぇいる</p>
+                    </div>
+                    <div class="item">
+                        <img src="./assets/icon/chikuwa.png" alt="chikuwa" class="circle-img">
+                        <p class="image-text">ちくわ大明神</p>
+                    </div>
+                </div>
+                <div class="staff-row">
+                    <div class="item">
+                        <img src="./assets/icon/hinatsu.png" alt="hinatsu" class="circle-img">
+                        <p class="image-text">白星ひなつ</p>
+                    </div>
+                    <div class="item">
+                        <img src="./assets/icon/haruwaiku.png" alt="haruwaiku" class="circle-img">
+                        <p class="image-text">はるわいく</p>
+                    </div>
+                    <div class="item">
+                        <img src="./assets/icon/yu.png" alt="yu" class="circle-img">
+                        <p class="image-text">ゅぅ</p>
+                    </div>
+                </div>
             </div>
-        `;
-    });
+        </section>
 
-    if (otherEvents.length > 0) {
-        otherEventsHTML += '</div></div>'; // 最後の年とセクションを閉じる
-    } else {
-         otherEventsHTML = ''; // 直近の予定しかない場合は空にする
-    }
+        <section id="special-thanks">
+            <h2>スペシャルサンクス</h2>
+            <p class="center-text">この場を借りて御礼申し上げます</p>
+            <p class="center-text">・いつも参加していただいている皆さん</p>
+            <p class="center-text">・アバター、ワールド等の制作者、プロバイダー各位</p>
+        </section>
 
+        <footer>
 
-    // すべてをコンテナに追加
-    container.innerHTML = nextEventHTML + otherEventsHTML;
-});
-    
-</script>
+        </footer>
 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-   
-    <style>
-        /* ここに以下のCSSを貼り付けます */
-    </style>
-</head>
-<body>
-
-    <div class="calendar-wrapper">
-        <h1 class="main-title">開催カレンダー</h1>
-        <p class="note">開催日は変わることがあります。</p>
-
-        <div id="calendar-container">
-            <p>カレンダーを読み込み中...</p>
-        </div>
-    </div>
-
-    <script>
-        // 上記の **JavaScriptコード** をここに貼り付けます
-        // ... (省略)
-    </script>
-
-</body>
+        <script src="./scripts/script.js"></script>
+    </body>
 </html>
-
-<br><br>
-<br><br>
-
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h2>スタッフ</h2>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
-    <!-- 全体を囲むコンテナ -->
-    <div class="container">
-        <!-- 各アイテムを個別に囲む -->
-        <div class="item">
-            <img src="placeholder_fkaoi.png" alt="画像1" class="circle-img">
-            <p class="image-text">fkaoi_</p>
-        </div>
-        
-        <div class="item">
-            <img src="fail.BNhGNJWL_Z20KwRn.png" alt="画像2" class="circle-img">
-            <p class="image-text">ふぇいる</p>
-        </div>
-        
-        <div class="item">
-            <img src="chikuwa.GHce8x7U_9Rwa9.png" alt="画像3" class="circle-img">
-            <p class="image-text">ちくわ大明神</p>
-        </div>
-    </div>
-</body>
-<br><br>
-<body>
-    
-    <!-- 全体を囲むコンテナ -->
-    <div class="container">
-        <!-- 各アイテムを個別に囲む -->
-        <div class="item">
-            <img src="hinatsu.BRPd_Fa9_Z2rDxVd.png" alt="画像4" class="circle-img">
-            <p class="image-text">白星ひなつ</p>
-        </div>
-        
-        <div class="item">
-            <img src="haruwaiku.1EPV7mN0_ZEtEAc.png" alt="画像5" class="circle-img">
-            <p class="image-text">はるわいく</p>
-        </div>
-        
-        <div class="item">
-            <img src="yu.l_yiWT-T_ZnLx1L.png" alt="画像6" class="circle-img">
-            <p class="image-text">ゅぅ</p>
-        </div>
-    </div>
-</body>
-</html>
-
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<h2>スペシャルサンクス</h2>
-  <p class="center-text">この場を借りて御礼申し上げます</p>
-  <p class="center-text">・いつも参加していただいている皆さん</p>
-  <p class="center-text">・アバター、ワールド等の制作者、プロバイダー各位</p>
-
-
-
